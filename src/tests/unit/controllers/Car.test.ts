@@ -4,10 +4,6 @@ import chai from 'chai';
 import { expect } from 'chai';
 import * as sinon from 'sinon';
 
-import { ZodError } from 'zod';
-import { ErrorTypes } from '../../../errors/TypeErrors';
-import { ICar } from '../../../interfaces/ICar';
-
 import CarsModel from '../../../models/Cars';
 import CarService from '../../../services/Cars';
 import CarController from '../../../controllers/Car';
