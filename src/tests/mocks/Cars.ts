@@ -19,5 +19,4 @@ export const carMockWithId: ICar & { _id: string } = {
   "buyValue": 30000,
   "doorsQty": 4,
   "seatsQty": 5,
-  // "__v": 0
 }
