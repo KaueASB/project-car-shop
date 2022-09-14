@@ -19,8 +19,7 @@ describe('Test model Cars', () => {
 
       const newCar = await carModel.create(carMock)
       expect(newCar).to.be.deep.eq(carMockWithId)
-    });
-    
+    });    
   })
-
+  
 });
