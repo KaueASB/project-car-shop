@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { VehicleZodSchema } from './IVehicle';
 
-const CarZodSchema = VehicleZodSchema.merge(z.object({
+export const carZodSchema = VehicleZodSchema.merge(z.object({
   doorsQty: z.number({
     required_error: 'doorsQty is required',
     invalid_type_error: 'doorsQty must be a number',
@@ -14,4 +14,4 @@ const CarZodSchema = VehicleZodSchema.merge(z.object({
     .lte(7, { message: 'seatsQty must be lesss than or equal to 7' }),
 }));
 
-export type ICar = z.infer<typeof CarZodSchema>;
+export type ICar = z.infer<typeof carZodSchema>;
