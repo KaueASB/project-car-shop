@@ -12,7 +12,8 @@ const route = Router();
 
 route.route('/:id')
   .get((req, res) => carController.readOne(req, res))
-  .put((req, res) => carController.update(req, res));
+  .put((req, res) => carController.update(req, res))
+  .delete((req, res) => carController.delete(req, res));
 
 route.route('/')
   .get((req, res) => carController.read(req, res))
