@@ -4,7 +4,7 @@ import * as sinon from 'sinon';
 
 import { Model } from 'mongoose';
 import CarsModel from '../../../models/Cars';
-import { carMock, carMockWithId, listCarsMockWithId } from '../../mocks/Cars';
+import { carMock, carMockUpdated, carMockWithId, listCarsMockWithId } from '../../mocks/Cars';
 import { ErrorTypes } from '../../../errors/TypeErrors';
 
 describe('Test model Cars', () => {
@@ -23,7 +23,7 @@ describe('Test model Cars', () => {
     });    
   })
 
-  describe('should list all cars', () => {
+  describe('List all cars', () => {
     it('successfully list cars', async () => {
       sinon.stub(Model, 'find').resolves(listCarsMockWithId);
 
@@ -41,7 +41,7 @@ describe('Test model Cars', () => {
     });
   })
 
-  describe('should list one car', () => {
+  describe('List one car', () => {
     it('successfully list one car', async () => {
       sinon.stub(Model, 'findOne').resolves(carMockWithId);
 
@@ -57,6 +57,30 @@ describe('Test model Cars', () => {
 
       try {
         await carModel.readOne('invalidIdsnfkjd123');
+      } catch (errCatch: any) {
+        error = errCatch;
+      }
+
+      expect(error.message).to.be.eq(ErrorTypes.InvalidMongoId);
+    });
+  })
+
+  describe('Update a car', () => {
+    it('successfully update one car', async () => {
+      sinon.stub(Model, 'findByIdAndUpdate').resolves(carMockUpdated);
+
+      const carUpdated = await carModel.update(carMockWithId._id, carMock)
+      expect(carUpdated).to.be.deep.eq(carMockUpdated)
+      expect(carUpdated).to.be.haveOwnProperty('_id')
+      expect(carUpdated).to.be.an('object')
+    }); 
+    
+    it('should fail if id is invalid', async () => {
+      sinon.stub(Model, 'findByIdAndUpdate').resolves(carMockUpdated);
+      let error: any;
+
+      try {
+        await carModel.update('invalidIdsnfkjd123', carMock);
       } catch (errCatch: any) {
         error = errCatch;
       }

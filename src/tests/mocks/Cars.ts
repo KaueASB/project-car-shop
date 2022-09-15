@@ -21,6 +21,17 @@ export const carMockWithId: ICar & { _id: string } = {
   "seatsQty": 5,
 }
 
+export const carMockUpdated: ICar & { _id: string } = {
+  "_id": "62cf1fc6498565d94eba52cd",
+  "model": "Polo",
+  "year": 2013,
+  "color": "white",
+  "status": false,
+  "buyValue": 30000,
+  "doorsQty": 4,
+  "seatsQty": 5,
+}
+
 export const listCarsMockWithId: Array<ICar & { _id: string }> = [
   {
   "_id": "62cf1fc6498565d94eba52cd",
@@ -41,5 +52,5 @@ export const listCarsMockWithId: Array<ICar & { _id: string }> = [
     "buyValue": 100000,
     "doorsQty": 4,
     "seatsQty": 5,
-    },
+  },
 ]
