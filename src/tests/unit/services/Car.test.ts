@@ -124,4 +124,33 @@ describe('Test Service Cars', () => {
       expect(error.message).to.be.eq(ErrorTypes.NotFound);
     });
   })
+
+  describe('Delete a car', () => {
+    it('successfully delete one car', async () => {
+      sinon.stub(carModel, 'delete').resolves(listCarsMockWithId[0]);
+      const idDeleted = listCarsMockWithId[0]._id;
+
+      const carDeleted = await carService.delete(idDeleted)
+      const filtered = listCarsMockWithId.filter((item) => item._id !== idDeleted)
+      const verify = filtered.some((item) => item._id === idDeleted)
+
+      expect(carDeleted).to.be.deep.eq(carMockWithId)
+      expect(verify).to.be.false
+    });
+
+    it('should fail if ID not found', async () => {
+      sinon.stub(carModel, 'delete').resolves(null);
+      const idDeleted = listCarsMockWithId[0]._id;
+
+      let error: any;
+
+      try {
+        await carService.delete(idDeleted);
+      } catch (errCatch: any) {
+        error = errCatch;
+      }
+
+      expect(error.message).to.be.eq(ErrorTypes.NotFound);
+    });
+  })
 });
