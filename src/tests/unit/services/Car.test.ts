@@ -8,7 +8,7 @@ import { ICar } from '../../../interfaces/ICar';
 
 import CarsModel from '../../../models/Cars';
 import CarService from '../../../services/Cars';
-import { carMock, carMockWithId } from '../../mocks/Cars';
+import { carMock, carMockWithId, listCarsMockWithId } from '../../mocks/Cars';
 
 describe('Test Service Cars', () => {
   const carModel = new CarsModel()
@@ -42,5 +42,6 @@ describe('Test Service Cars', () => {
       expect(err).to.be.instanceOf(ZodError)
     });
   })
-  
+
+
 });
