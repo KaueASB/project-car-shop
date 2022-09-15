@@ -8,7 +8,7 @@ import { ICar } from '../../../interfaces/ICar';
 
 import CarsModel from '../../../models/Cars';
 import CarService from '../../../services/Cars';
-import { carMock, carMockWithId, listCarsMockWithId } from '../../mocks/Cars';
+import { carMock, carMockUpdated, carMockWithId, listCarsMockWithId } from '../../mocks/Cars';
 
 describe('Test Service Cars', () => {
   const carModel = new CarsModel()
@@ -43,7 +43,7 @@ describe('Test Service Cars', () => {
     });
   })
 
-  describe('should list all cars', () => {
+  describe('List all cars', () => {
     it('successfully list cars', async () => {
       sinon.stub(carModel, 'read').resolves(listCarsMockWithId);
 
@@ -61,7 +61,7 @@ describe('Test Service Cars', () => {
     });
   })
 
-  describe('should list one car', () => {
+  describe('List a car', () => {
     it('successfully list one car', async () => {
       sinon.stub(carModel, 'readOne').resolves(carMockWithId);
 
@@ -77,6 +77,46 @@ describe('Test Service Cars', () => {
 
       try {
         await carService.readOne(carMockWithId._id);
+      } catch (errCatch: any) {
+        error = errCatch;
+      }
+
+      expect(error.message).to.be.eq(ErrorTypes.NotFound);
+    });
+  })
+
+  describe('Update a car', () => {
+    it('successfully update one car', async () => {
+      sinon.stub(carModel, 'update').resolves(carMockUpdated);
+
+      const getOne = await carService.update(carMockWithId._id, carMock)
+      expect(getOne).to.be.deep.eq(carMockUpdated)
+      expect(getOne).to.be.haveOwnProperty('_id')
+      expect(getOne).to.be.an('object')
+    }); 
+
+    it('should fail if the body is not sent correctly', async () => {
+      sinon.stub(carModel, 'update').resolves(carMockUpdated);
+
+      const { model, ...rest  } = carMock
+      let error: any;
+
+      try {
+        await carService.update(carMockWithId._id, rest);
+      } catch (errCatch: any) {
+        error = errCatch;
+      }
+
+      expect(error).to.be.instanceOf(ZodError);
+    });
+
+    it('should fail if the ID is not valid', async () => {
+      sinon.stub(carModel, 'update').resolves(null);
+
+      let error: any;
+
+      try {
+        await carService.update('1561618dsadf', carMock);
       } catch (errCatch: any) {
         error = errCatch;
       }

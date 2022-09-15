@@ -5,7 +5,7 @@ import { ErrorTypes, errorCatalog } from '../errors/TypeErrors';
 
 const errorHandler: ErrorRequestHandler = (err: Error | ZodError, _req, res, _next) => {
   if (err instanceof ZodError) {
-    return res.status(400).json({ error: err.issues });
+    return res.status(400).json({ error: err.issues[0].message });
   }
 
   const messageAsErrorType = err.message as keyof typeof ErrorTypes;

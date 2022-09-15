@@ -41,7 +41,7 @@ describe('Test model Cars', () => {
     });
   })
 
-  describe('List one car', () => {
+  describe('List a car', () => {
     it('successfully list one car', async () => {
       sinon.stub(Model, 'findOne').resolves(carMockWithId);
 
