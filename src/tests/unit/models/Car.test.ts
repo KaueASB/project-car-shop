@@ -88,5 +88,32 @@ describe('Test model Cars', () => {
       expect(error.message).to.be.eq(ErrorTypes.InvalidMongoId);
     });
   })
+
+  describe('Delete a car', () => {
+    it('successfully delete one car', async () => {
+      sinon.stub(Model, 'findByIdAndDelete').resolves(listCarsMockWithId[0]);
+      const idDeleted = listCarsMockWithId[0]._id;
+
+      await carModel.delete(idDeleted)
+      const filtered = listCarsMockWithId.filter((item) => item._id !== idDeleted)
+      const verify = filtered.some((item) => item._id === idDeleted)
+
+      expect(verify).to.be.false
+    }); 
+    
+    it('should fail if id is invalid', async () => {
+      sinon.stub(Model, 'findByIdAndDelete').resolves(listCarsMockWithId[0]);
+
+      let error: any;
+
+      try {
+        await carModel.delete('invalidIdsnfkjd123');
+      } catch (errCatch: any) {
+        error = errCatch;
+      }
+
+      expect(error.message).to.be.eq(ErrorTypes.InvalidMongoId);
+    });
+  })
   
 });
