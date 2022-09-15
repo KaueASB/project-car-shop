@@ -43,5 +43,45 @@ describe('Test Service Cars', () => {
     });
   })
 
+  describe('should list all cars', () => {
+    it('successfully list cars', async () => {
+      sinon.stub(carModel, 'read').resolves(listCarsMockWithId);
 
+      const listCars = await carService.read()
+      expect(listCars).to.be.deep.eq(listCarsMockWithId)
+      expect(listCars).to.be.an('array')
+    }); 
+    
+    it('should list an empty array if there are no cars', async () => {
+      sinon.stub(carModel, 'read').resolves([]);
+
+      const listCars = await carService.read()
+      expect(listCars).to.be.length(0)
+      expect(listCars).to.be.an('array')
+    });
+  })
+
+  describe('should list one car', () => {
+    it('successfully list one car', async () => {
+      sinon.stub(carModel, 'readOne').resolves(carMockWithId);
+
+      const getOne = await carService.readOne('62cf1fc6498565d94eba52cd')
+      expect(getOne).to.be.deep.eq(carMockWithId)
+      expect(getOne).to.be.haveOwnProperty('_id')
+      expect(getOne).to.be.an('object')
+    }); 
+
+    it('should fail if car not found', async () => {
+      sinon.stub(carModel, 'readOne').resolves(null);
+      let error: any;
+
+      try {
+        await carService.readOne(carMockWithId._id);
+      } catch (errCatch: any) {
+        error = errCatch;
+      }
+
+      expect(error.message).to.be.eq(ErrorTypes.NotFound);
+    });
+  })
 });
