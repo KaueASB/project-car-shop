@@ -15,7 +15,6 @@ Não deixe de usar nossas dicas de escrita de README de projetos, e deixe sua cr
 
 # Boas-vindas ao repositório do Projeto Car Shop! 
 
-<details>
 <summary><strong>👨‍💻 O que foi desenvolvido</strong></summary><br />
 
   Para este projeto, foi aplicado os princípios de Programação Orientada a Objetos (`POO`) e Princípios `S.O.L.I.D` para a construção de uma API com `CRUD` para gerenciar uma concessionária de veículos. Isso foi feito utilizando o banco de dados `MongoDB` e o ODM `Mongoose`.
@@ -24,4 +23,3 @@ Não deixe de usar nossas dicas de escrita de README de projetos, e deixe sua cr
 
   ---
 
-</details>
